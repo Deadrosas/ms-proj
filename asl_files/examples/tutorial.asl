@@ -26,7 +26,7 @@ publisher(wiley)
     -?g (test goal deletion)
 */
 
-/* Original AgentSpeak, JASON allows for more complex triggering events */
+/* Original AgentSpeak; JASON allows for more complex triggering events */
 
 
 
