@@ -15,6 +15,7 @@ import traci
 
 
 def get_options():
+    """get the command line options"""
     opt_parser = optparse.OptionParser()
     opt_parser.add_option('--nogui', action="store_true",
                                     default= False, help= "run the commandline version of SUMO")
@@ -24,6 +25,7 @@ def get_options():
 
 
 def run():
+    """execute the TraCI control loop"""
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
@@ -47,6 +49,7 @@ def run():
 
 
 if __name__ == "__main__":
+    """main entry point"""
     options = get_options()
 
 

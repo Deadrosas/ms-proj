@@ -1,0 +1,53 @@
+#eT (estimated Time)
+#rT (real Time)
+
+
+route(n_route, expected_time, num_routes)
+route(1, 3, 3).
+route(2, 6, 3).
+route(3, 9, 3).
+
+# depends how 3 will be dones but routes can also be edges
+
+edge(A,B,real_distance, eT) # maybe eR needed
+edge(B, C...)
+edge(B, D...)
+
+edge(N, end...)
+
+
+build_path(start, end, [start|end])
+
+
+edge1, 
+edge(start, end)<-
+	.edge1(start, endX)
+	.edge2(startX, end)
+
+update_route(X, rT) <-
+	#decide if it should change route or not)	
+	
+
+change_route(X) <-
+	!route(X + 1, tE)
+
+route(X, tR, tE) <-
+	!change_route(...)
+	
+
+merge_route(X, X1, X2, ...)<-
+	route(X, iX1, fX2, Y, T) # route X, that starts at iX1, and ends at fX2, taking Y eT to cross and some variable T)
+# start all routes at rT = 0
+
+update eT based on rT # problems appear when we don't trace a route for long times)
+
+Simulation Agents:
+
+1.
+	1.1 - Greedy agent, all routes start at eT 0 and the agent chooses/tries all routes until it finds the fastest
+	1.2 - Agent has eT on all routes and is always happy unless the route changes too much (threshold)
+2.
+	2.1 - Greedy agents ans smart agents, greedy agents have the same properties has in 1.1, smart agents have eT based on the rT of other agents
+
+3.
+	3.1 - Agents change routes based on the time they are taking to cross the route
