@@ -33,11 +33,21 @@ def run():
         if step % 100 == 0:
             print(step)
 
-        if step == 100:
-            print(traci.vehicle.getIDList())
+        if step > 100:
             
-            traci.vehicle.changeTarget("carflow.0", "E4")
-            traci.vehicle.changeTarget("carflow.2", "E4")
+            
+            # traci.vehicle.changeTarget("carflow.0", "E4")
+            # traci.vehicle.changeTarget("carflow.2", "E4")
+
+            vehicles = traci.edge.getLastStepVehicleIDs("E0")
+           # getLastStepVehicleIDs("E0")
+
+            if("carflow.0" in vehicles):
+                traci.vehicle.setRouteID("carflow.0","route_2")
+            
+
+    
+           # traci.vehicle.setRouteID("carflow.2","route_1")
 
 
         step += 1
