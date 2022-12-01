@@ -1,7 +1,7 @@
 <configuration>
     <input>
-        <net-file value="basic.net.xml"/>
-        <route-files value="basic.rou.xml"/>
+        <net-file value="networkB.net.xml"/>
+        <route-files value="networkA.rou.xml"/>
         <!--<additional-files value ="basic.add.xml"/>-->
 
     </input>

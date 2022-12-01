@@ -1,3 +1,4 @@
+<!--
 <additionals>
     <rerouter id="rerouter_0" edges="E18" probability="1">
         <interval begin="0" end="10000">
@@ -14,3 +15,5 @@
     <elDetector id="det_0" lane="E16_1" pos="30" freq="300" file="det.out" />
 
 </additionals>
+
+-->

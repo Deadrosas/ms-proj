@@ -14,6 +14,8 @@ from sumolib import checkBinary
 import traci
 
 
+
+
 def get_options():
     """get the command line options"""
     opt_parser = optparse.OptionParser()
@@ -39,18 +41,16 @@ def run():
             # traci.vehicle.changeTarget("carflow.0", "E4")
             # traci.vehicle.changeTarget("carflow.2", "E4")
 
-            vehicles = traci.edge.getLastStepVehicleIDs("E0")
+           # vehicles = traci.edge.getLastStepVehicleIDs("E0")
            # getLastStepVehicleIDs("E0")
 
-            if("carflow.0" in vehicles):
-                traci.vehicle.setRouteID("carflow.0","route_2")
+           # if("carflow.0" in vehicles):
+              #  traci.vehicle.setRouteID("carflow.0","route_2")
             
 
     
            # traci.vehicle.setRouteID("carflow.2","route_1")
-
-
-        step += 1
+            step += 1
 
 
 
@@ -69,6 +69,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     
-    traci.start([sumoBinary, "-c", "SUMO_Simulations\\Basic\\basic.sumocfg", "--tripinfo-output", "tripinfo.xml"])
+    traci.start([sumoBinary, "-c", "SUMO_Simulations\\Basic\\networkA.sumocfg", "--tripinfo-output", "tripinfo.xml"])
 
     run()
