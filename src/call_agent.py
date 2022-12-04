@@ -9,6 +9,7 @@ actions = agentspeak.Actions(agentspeak.stdlib.actions)
 @actions.add_procedure(".call_my_plan",(agentspeak.runtime.Agent, str))
 def call_my_plan(agent, txt):
     """Call a plan in the agent's program."""
+    print("call_my_plan was triggered")
     agent.call(
         agentspeak.Trigger.addition,
         agentspeak.GoalType.achievement,
@@ -18,7 +19,7 @@ def call_my_plan(agent, txt):
 
 env = agentspeak.runtime.Environment()
 
-with open(os.path.join(os.path.dirname(__file__), "agent.asl")) as source:
+with open(os.path.join(os.path.dirname(__file__), "asl_files/agent.asl")) as source:
     """Load the agent's program."""
     agent = env.build_agent(source, actions)
 

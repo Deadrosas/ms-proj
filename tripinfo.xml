@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-11-13 10:39:22 by Eclipse SUMO GUI Version 1.14.1
+<!-- generated on 2022-12-04 16:29:42 by Eclipse SUMO GUI Version 1.12.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="SUMO_Simulations\Basic\basic.net.xml"/>
-        <route-files value="SUMO_Simulations\Basic\basic.rou.xml"/>
-        <additional-files value="SUMO_Simulations\Basic\basic.add.xml"/>
+        <net-file value="SUMO_Simulations/Basic/basic.net.xml"/>
+        <route-files value="SUMO_Simulations/Basic/basic.rou.xml"/>
+        <additional-files value="SUMO_Simulations/Basic/basic.add.xml"/>
     </input>
 
     <output>
@@ -14,11 +14,17 @@
     </output>
 
     <traci_server>
-        <remote-port value="62200"/>
+        <remote-port value="55017"/>
     </traci_server>
 
 </configuration>
 -->
 
 <tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="carflow.0" depart="0.00" departLane="E0_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="10002.00" arrivalLane="E15_0" arrivalPos="6.87" arrivalSpeed="7.05" duration="10002.00" routeLength="64660.60" waitingTime="20.00" waitingCount="18" stopTime="0.00" timeLoss="3201.35" rerouteNo="337" devices="tripinfo_carflow.0 routing_carflow.0" vType="car" speedFactor="1.06" vaporized=""/>
+    <tripinfo id="carflow.3" depart="13.00" departLane="E0_0" departPos="5.10" departSpeed="0.00" departDelay="13.00" arrival="10006.00" arrivalLane="E18_1" arrivalPos="44.11" arrivalSpeed="7.71" duration="9993.00" routeLength="64474.14" waitingTime="27.00" waitingCount="25" stopTime="0.00" timeLoss="3240.05" rerouteNo="338" devices="tripinfo_carflow.3 routing_carflow.3" vType="car" speedFactor="1.08" vaporized=""/>
+    <tripinfo id="carflow.4" depart="16.00" departLane="E0_0" departPos="5.10" departSpeed="0.00" departDelay="16.00" arrival="10020.00" arrivalLane="E15_1" arrivalPos="6.87" arrivalSpeed="9.39" duration="10004.00" routeLength="63286.77" waitingTime="24.00" waitingCount="23" stopTime="0.00" timeLoss="3329.71" rerouteNo="331" devices="tripinfo_carflow.4 routing_carflow.4" vType="car" speedFactor="1.03" vaporized=""/>
+    <tripinfo id="carflow.1" depart="5.00" departLane="E0_0" departPos="5.10" departSpeed="0.00" departDelay="5.00" arrival="10021.00" arrivalLane="E15_0" arrivalPos="6.87" arrivalSpeed="9.15" duration="10016.00" routeLength="61001.54" waitingTime="13.00" waitingCount="13" stopTime="0.00" timeLoss="3495.47" rerouteNo="319" devices="tripinfo_carflow.1 routing_carflow.1" vType="car" speedFactor="0.94" vaporized=""/>
+    <tripinfo id="evflow.0" depart="19.00" departLane="E0_0" departPos="7.10" departSpeed="0.00" departDelay="19.00" arrival="10026.00" arrivalLane="E15_1" arrivalPos="6.87" arrivalSpeed="11.58" duration="10007.00" routeLength="85777.29" waitingTime="63.00" waitingCount="62" stopTime="0.00" timeLoss="5547.07" rerouteNo="465" devices="tripinfo_evflow.0 routing_evflow.0" vType="ev" speedFactor="2.20" vaporized=""/>
+    <tripinfo id="carflow.2" depart="9.00" departLane="E0_0" departPos="5.10" departSpeed="0.00" departDelay="9.00" arrival="10061.00" arrivalLane="E15_0" arrivalPos="6.87" arrivalSpeed="6.94" duration="10052.00" routeLength="64060.05" waitingTime="15.00" waitingCount="15" stopTime="0.00" timeLoss="3271.47" rerouteNo="333" devices="tripinfo_carflow.2 routing_carflow.2" vType="car" speedFactor="1.01" vaporized=""/>
 </tripinfos>
