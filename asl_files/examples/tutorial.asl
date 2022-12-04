@@ -115,5 +115,11 @@ f. Expressions
 
 */
 
+/* Strong Negation
+
+    *!leave(home) : not raining & not ~raining
+        <- open(curtains);
+
+
 
 

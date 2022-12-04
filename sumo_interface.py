@@ -27,17 +27,33 @@ def get_options():
 def run():
     """execute the TraCI control loop"""
     step = 0
+
+    print(traci.vehicle.getIDList())
+
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
 
-        if step % 100 == 0:
-            print(step)
 
-        if step == 100:
-            print(traci.vehicle.getIDList())
+        vehicles = traci.edge.getLastStepVehicleIDs("E0")
+
+        for vehicle in vehicles:
+            print("Vehicle {} is on the edge".format(vehicle))
+
+        vehicles2 = traci.edge.getLastStepVehicleIDs("E18")
+
+        for vehicle in vehicles2:
+            print("Vehicle {} is on the edge".format(vehicle))
+
+
+
+        # if step % 100 == 0:
+        #     print(step)
+
+        # if step == 100:
+        #     print(traci.vehicle)
             
-            traci.vehicle.changeTarget("carflow.0", "E4")
-            traci.vehicle.changeTarget("carflow.2", "E4")
+        #     traci.vehicle.changeTarget("carflow.0", "E4")
+        #     traci.vehicle.changeTarget("carflow.2", "E4")
 
 
         step += 1

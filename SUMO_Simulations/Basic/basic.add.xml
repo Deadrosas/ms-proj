@@ -11,6 +11,6 @@
         </interval>
     </rerouter>
 
-    <elDetector id="det_0" lane="E16_1" pos="30" freq="300" file="det.out" />
+    <elDetector id="det_0" lane="E18_1" pos="30" freq="300" file="det.out" />
 
 </additionals>
