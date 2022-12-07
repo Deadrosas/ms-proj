@@ -4,32 +4,26 @@ import agentspeak.stdlib
 
 import os
 
-def add_procedure(actions, name, signature):
-    """Add a procedure to the agent's program."""
-    actions.add_procedure(name, signature)
+class SimpleDriverAgent():
+    
 
-class SimpleDriverAgent(agentspeak.runtime.Agent):
-    actions = agentspeak.Actions(agentspeak.stdlib.actions)
+    def __init__(self, actions, env, name):
 
-    def __init__(self, env, name):
-        super().__init__(env, name)
-
+        self.actions = actions
         self.env = env
         self.name = name
 
-        self.env.add_agent(self)
 
+        with open(os.path.join(os.path.dirname(__file__), "../asl_files/agent_mult.asl")) as source:
+            """Load the agent's program."""
+            self.agent = self.env.build_agent(source, self.actions)
+        
+        self.env.run_agent(self.agent)
 
-    def run(self):
-        self.env.run_agent(self)
+    
+    def __repr__(self) -> str:
+        return "SimpleDriverAgent" + self.name + " Actions: " + str(self.actions) + "Env: " + str(self.env)
 
+    def __str__(self) -> str:
+        return "SimpleDriverAgent: " + self.name + " Actions: " + str(self.actions) + "Env: " + str(self.env)
 
-    @add_procedure(actions, ".call_my_plan", (agentspeak.runtime.Agent, str))
-    def call_my_plan(self, txt):
-        """Call a plan in the agent's program."""
-        print("call_my_plan was triggered")
-        self.call(
-            agentspeak.Trigger.addition,
-            agentspeak.GoalType.achievement,
-            agentspeak.Literal("my_plan", (txt.upper(), )),
-            agentspeak.runtime.Intention())

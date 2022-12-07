@@ -2,11 +2,10 @@ import os
 import sys
 import optparse
 
-import agentspeak
-import agentspeak.runtime
-import agentspeak.stdlib
 
-from simple_driver_agent import *
+import simple_driver_agent as sda
+
+from simple_driver_agent_components import *
 
 vehicles = {}
 
@@ -36,13 +35,11 @@ def get_options():
 
 """Deal with AgentSpeak code here"""
 
-actions = agentspeak.Actions(agentspeak.stdlib.actions)
-
+# actions = agentspeak.Actions(agentspeak.stdlib.actions)
 
 env = agentspeak.runtime.Environment()
 
-agent0 = SimpleDriverAgent(env, "agent0", actions)
-
+current_vehicles = {}
 
 def run():
     """execute the TraCI control loop"""
@@ -55,25 +52,21 @@ def run():
         vehicles = traci.edge.getLastStepVehicleIDs("E0")
 
         for vehicle in vehicles:
-            vehicles[vehicle] = DriverAgent(vehicle)
+            # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             
-
-            if vehicle == "carflow.0":
-
-                print("Vehicle {} is on the edge".format(vehicle))
-
-        # vehicles2 = traci.edge.getLastStepVehicleIDs("E18")
-
-        # for vehicle in vehicles2:
-        #     print("Vehicle {} is on the edge".format(vehicle))
+            if vehicle not in current_vehicles:
+                current_vehicles[vehicle] = sda.SimpleDriverAgent(simple_driver_agent_actions, simple_driver_agent_env, vehicle)
+                print("Vehicle {} is on the edge {}".format(vehicle, "E0"))
 
 
 
         # if step % 100 == 0:
         #     print(step)
 
-        # if step == 100:
-        #     print(traci.vehicle)
+        if step == 100:
+            # print(current_vehicles)
+            for vehicle in current_vehicles:
+                print(current_vehicles[vehicle])
             
         #     traci.vehicle.changeTarget("carflow.0", "E4")
         #     traci.vehicle.changeTarget("carflow.2", "E4")
@@ -98,6 +91,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     
-    traci.start([sumoBinary, "-c", "SUMO_Simulations/Basic/basic.sumocfg", "--tripinfo-output", "tripinfo.xml"])
+    traci.start([sumoBinary, "-c", "../SUMO_Simulations/Basic/basic.sumocfg", "--tripinfo-output", "tripinfo.xml"])
 
     run()

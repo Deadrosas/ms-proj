@@ -1,10 +1,9 @@
-beliefs:
-    - at_destination
-    - at_origin
+!arrive_at_destination(destination)
 
 
-goals:
-    - +arrive_at_destination
++!drive(destination) 
+    : not !at_destination(destination)
+    <- drive_to(destination)
 
 
 actions:

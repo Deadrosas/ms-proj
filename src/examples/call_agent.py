@@ -1,3 +1,5 @@
+"""Example of calling a plan in an agent's program."""
+
 import agentspeak
 import agentspeak.runtime
 import agentspeak.stdlib
@@ -19,7 +21,7 @@ def call_my_plan(agent, txt):
 
 env = agentspeak.runtime.Environment()
 
-with open(os.path.join(os.path.dirname(__file__), "asl_files/agent.asl")) as source:
+with open(os.path.join(os.path.dirname(__file__), "../asl_files/agent.asl")) as source:
     """Load the agent's program."""
     agent = env.build_agent(source, actions)
 
