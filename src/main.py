@@ -2,8 +2,7 @@ import os
 import sys
 import optparse
 
-
-import simple_driver_agent as sda
+from simple_driver_agent import *
 
 from simple_driver_agent_components import *
 
@@ -55,7 +54,7 @@ def run():
             # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             
             if vehicle not in current_vehicles:
-                current_vehicles[vehicle] = sda.SimpleDriverAgent(simple_driver_agent_actions, simple_driver_agent_env, vehicle)
+                current_vehicles[vehicle] = SimpleDriverAgent(simple_driver_agent_actions, simple_driver_agent_env, vehicle)
                 print("Vehicle {} is on the edge {}".format(vehicle, "E0"))
 
 
@@ -67,6 +66,7 @@ def run():
             # print(current_vehicles)
             for vehicle in current_vehicles:
                 print(current_vehicles[vehicle])
+                current_vehicles[vehicle].drive()
             
         #     traci.vehicle.changeTarget("carflow.0", "E4")
         #     traci.vehicle.changeTarget("carflow.2", "E4")

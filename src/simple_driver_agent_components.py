@@ -17,6 +17,13 @@ def call_my_plan(agent, txt1, txt2):
         agentspeak.runtime.Intention())
     
 
+def drive(self):
+        """Call a plan in the agent's program."""
+        self.agent.call(
+            agentspeak.Trigger.addition,
+            agentspeak.GoalType.achievement,
+            agentspeak.Literal("drive", (self.name.upper(),)),
+            agentspeak.runtime.Intention())
 
 simple_driver_agent_env = agentspeak.runtime.Environment()
 
