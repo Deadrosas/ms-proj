@@ -21,11 +21,10 @@ def call_my_plan(agent, txt):
 
 env = agentspeak.runtime.Environment()
 
-with open(os.path.join(os.path.dirname(__file__), "../asl_files/agent.asl")) as source:
+with open(os.path.join(os.path.dirname(__file__), "../../asl_files/agent.asl")) as source:
     """Load the agent's program."""
-    agent = env.build_agent(source, actions)
-
+    env.build_agents(source, 3, actions)
 
 if __name__ == "__main__":
     """Run the agent."""
-    env.run_agent(agent)
+    env.run()

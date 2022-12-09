@@ -21,3 +21,10 @@ with open(os.path.join(os.path.dirname(__file__), "agent.asl")) as source:
 
 if __name__ == "__main__":
     env.run_agent(agent)
+    print(actions)
+    env = agentspeak.runtime.Environment()
+
+    with open(os.path.join(os.path.dirname(__file__), "agent.asl")) as source:
+        agent = env.build_agent(source, actions)
+    
+    env.run_agent(agent)

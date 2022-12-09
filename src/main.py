@@ -54,7 +54,7 @@ def run():
             # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             
             if vehicle not in current_vehicles:
-                current_vehicles[vehicle] = SimpleDriverAgent(simple_driver_agent_actions, simple_driver_agent_env, vehicle)
+                current_vehicles[vehicle] = SimpleDriverAgent(vehicle)
                 print("Vehicle {} is on the edge {}".format(vehicle, "E0"))
 
 
@@ -62,11 +62,11 @@ def run():
         # if step % 100 == 0:
         #     print(step)
 
-        if step == 100:
+        if step % 100 == 0 and step != 0:
             # print(current_vehicles)
             for vehicle in current_vehicles:
                 print(current_vehicles[vehicle])
-                current_vehicles[vehicle].drive()
+                current_vehicles[vehicle].calc_path("E4")
             
         #     traci.vehicle.changeTarget("carflow.0", "E4")
         #     traci.vehicle.changeTarget("carflow.2", "E4")
