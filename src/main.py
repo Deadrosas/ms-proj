@@ -38,12 +38,13 @@ env = agentspeak.runtime.Environment()
 
 current_vehicles = {}
 
-paths = [["E4"]]
+paths = [[("E1", 3), ("E2", 4), ("E3", 5)]
+        ,[("E14", 3), ("E13", 4), ("E12", 5), ("E11", 2), ("E10", 2), ("E9", 1), ("E8", 2), ("E7", 5), ("E6", 2), ("E5", 1), ("E4", 1)]]
 
 def run():
     """execute the TraCI control loop"""
     step = 0
-
+    
 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
