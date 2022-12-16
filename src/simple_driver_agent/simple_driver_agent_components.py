@@ -2,7 +2,15 @@ import agentspeak
 import agentspeak.runtime
 import agentspeak.stdlib
 
-import os
+
+def calc_simple_path_cost(path):
+    """Calculate the cost of a path.
+    Each path is a list of edges. With it's associated weight.
+    So a Path weight is the sum of all edges weights multiplied by their distance.
+
+    """
+
+    return(len(path))
 
 simple_driver_agent_actions = agentspeak.Actions(agentspeak.stdlib.actions)
 
@@ -15,16 +23,8 @@ def call_my_plan(agent, txt1, txt2):
         agentspeak.GoalType.achievement,
         agentspeak.Literal("my_plan", (txt1.upper(), txt2.upper())),
         agentspeak.runtime.Intention())
-    
-
-def drive(self):
-        """Call a plan in the agent's program."""
-        self.agent.call(
-            agentspeak.Trigger.addition,
-            agentspeak.GoalType.achievement,
-            agentspeak.Literal("drive", (self.name.upper(),)),
-            agentspeak.runtime.Intention())
-
-simple_driver_agent_env = agentspeak.runtime.Environment()
 
 
+@simple_driver_agent_actions.add_function(".calc_shortest_path", (list, ))
+def calc_shortest_path(paths):
+    return(min(paths, key=calc_simple_path_cost))

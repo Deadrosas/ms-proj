@@ -2,9 +2,9 @@ import os
 import sys
 import optparse
 
-from simple_driver_agent import *
+from simple_driver_agent.simple_driver_agent import *
 
-from simple_driver_agent_components import *
+from simple_driver_agent.simple_driver_agent_components import *
 
 vehicles = {}
 
@@ -30,8 +30,6 @@ def get_options():
     return options
 
 
-
-
 """Deal with AgentSpeak code here"""
 
 # actions = agentspeak.Actions(agentspeak.stdlib.actions)
@@ -39,6 +37,8 @@ def get_options():
 env = agentspeak.runtime.Environment()
 
 current_vehicles = {}
+
+paths = [["E4"]]
 
 def run():
     """execute the TraCI control loop"""
@@ -66,7 +66,7 @@ def run():
             # print(current_vehicles)
             for vehicle in current_vehicles:
                 print(current_vehicles[vehicle])
-                current_vehicles[vehicle].calc_path("E4")
+                current_vehicles[vehicle].calc_path(paths)
             
         #     traci.vehicle.changeTarget("carflow.0", "E4")
         #     traci.vehicle.changeTarget("carflow.2", "E4")

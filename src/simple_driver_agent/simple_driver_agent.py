@@ -4,8 +4,7 @@ import agentspeak.stdlib
 
 import os
 
-from simple_driver_agent_components import *
-
+from simple_driver_agent.simple_driver_agent_components import *
 
 class SimpleDriverAgent():
     
@@ -22,7 +21,7 @@ class SimpleDriverAgent():
         
         env = agentspeak.runtime.Environment()
 
-        with open(os.path.join(os.path.dirname(__file__), "../asl_files/agent_mult.asl")) as source:
+        with open(os.path.join(os.path.dirname(__file__), "simple_driver_agent.asl")) as source:
             agent = env.build_agent(source, self.actions)
         
         env.run_agent(agent)
