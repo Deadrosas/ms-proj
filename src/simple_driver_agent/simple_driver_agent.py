@@ -17,7 +17,7 @@ class SimpleDriverAgent():
         
         # self.calc_path_agent_source = source
 
-    def calc_path(self, path):
+    def calc_path(self, paths):
         
         env = agentspeak.runtime.Environment()
 
@@ -28,8 +28,9 @@ class SimpleDriverAgent():
         #agent add path1(list)
         # print(tuple(path))
 
-        # SALVAÇÃO -----------------------------
-        agent.add_belief(agentspeak.Literal("path1", (tuple(path),)), agentspeak.runtime.Intention())
+        # # SALVAÇÃO -----------------------------
+        
+        agent.add_belief(agentspeak.Literal("paths", (tuple(paths),)), agentspeak.runtime.Intention())
 
 
         print("BELIEFS ")

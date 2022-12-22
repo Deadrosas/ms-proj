@@ -38,8 +38,9 @@ env = agentspeak.runtime.Environment()
 
 current_vehicles = {}
 
-paths = [[("E1", 3), ("E2", 4), ("E3", 5)]
-        ,[("E14", 3), ("E13", 4), ("E12", 5), ("E11", 2), ("E10", 2), ("E9", 1), ("E8", 2), ("E7", 5), ("E6", 2), ("E5", 1), ("E4", 1)]]
+#TODO: Get paths from routes.xml
+paths = ((("E1", 3), ("E2", 4), ("E3", 5))
+        ,(("E14", 3), ("E13", 4), ("E12", 5), ("E11", 2), ("E10", 2), ("E9", 1), ("E8", 2), ("E7", 5), ("E6", 2), ("E5", 1), ("E4", 1)))
 
 def run():
     """execute the TraCI control loop"""
@@ -67,7 +68,7 @@ def run():
             # print(current_vehicles)
             for vehicle in current_vehicles:
                 print(current_vehicles[vehicle])
-                current_vehicles[vehicle].calc_path(paths[0])
+                current_vehicles[vehicle].calc_path(paths)
             
         #     traci.vehicle.changeTarget("carflow.0", "E4")
         #     traci.vehicle.changeTarget("carflow.2", "E4")
