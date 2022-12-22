@@ -23,7 +23,11 @@ class SimpleDriverAgent():
 
         with open(os.path.join(os.path.dirname(__file__), "simple_driver_agent.asl")) as source:
             agent = env.build_agent(source, self.actions)
+
         
+        #agent add path1(list)
+        
+
         env.run_agent(agent)
         print(self.actions)
         return
