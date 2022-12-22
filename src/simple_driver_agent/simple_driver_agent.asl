@@ -1,7 +1,10 @@
 !start.
 
+path1(1).
+
+path2(2).
+
 +!start <-
-    .print(Path);
     .call_my_plan("path1", "path2").
 
 +!my_plan(X, Y) <-

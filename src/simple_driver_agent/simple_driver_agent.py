@@ -26,7 +26,14 @@ class SimpleDriverAgent():
 
         
         #agent add path1(list)
-        
+        # print(tuple(path))
+
+        # SALVAÇÃO -----------------------------
+        agent.add_belief(agentspeak.Literal("path1", (tuple(path),)), agentspeak.runtime.Intention())
+
+
+        print("BELIEFS ")
+        print(agent.beliefs)
 
         env.run_agent(agent)
         print(self.actions)

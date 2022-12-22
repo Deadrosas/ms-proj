@@ -67,7 +67,7 @@ def run():
             # print(current_vehicles)
             for vehicle in current_vehicles:
                 print(current_vehicles[vehicle])
-                current_vehicles[vehicle].calc_path(paths)
+                current_vehicles[vehicle].calc_path(paths[0])
             
         #     traci.vehicle.changeTarget("carflow.0", "E4")
         #     traci.vehicle.changeTarget("carflow.2", "E4")
