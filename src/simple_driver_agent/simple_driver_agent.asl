@@ -3,13 +3,13 @@
 
 +!start <-
     paths(N);
-    .calc_shortest_path(N, X);
-    .print(X).
+    .calc_shortest_path(N, X).#;
+    #.print(X).
 
 
 
-+!starts <-
-    .call_my_plan("path1", "path2").
+#+!starts <-
+    #.call_my_plan("path1", "path2").
 
 +!my_plan(X, Y) <-
     paths(N);
