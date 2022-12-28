@@ -3,6 +3,8 @@ import sys
 import optparse
 import xml.etree.ElementTree as ET
 
+import time
+
 from simple_driver_agent.simple_driver_agent import *
 
 from simple_driver_agent.simple_driver_agent_components import *
@@ -10,6 +12,10 @@ from simple_driver_agent.simple_driver_agent_components import *
 from edge import *
 
 vehicles = {}
+
+vehicle_times = {}
+
+vehicle_edge = {}
 
 edges = {}
 
@@ -72,7 +78,7 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
     # print(connection_list)
     # print(edge_list)
     
-    print (edges)
+    #print (edges)
     # print(edges)
     # print(connections)
 
@@ -98,12 +104,31 @@ def run():
 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
+        
+
+        
 
         # vehicles = traci.edge.getLastStepVehicleIDs("E0")
 
         vehicles = traci.vehicle.getIDList()
+        
 
+        delta_t = traci.simulation.getDeltaT()
+        updateVehicles(vehicles)
         for vehicle in vehicles:
+            
+            current_edge = traci.vehicle.getRoadID(vehicle)
+        
+            #check if vehicle edge changed
+            if vehicle_edge[vehicle] != current_edge: 
+                ##Check if it's an edge
+                if current_edge[0] == 'E':
+                    vehicle_edge[vehicle] = current_edge #update current edge
+                    vehicle_times[vehicle][current_edge] = 0 #elapsed time for new edge
+
+            else:
+                vehicle_times[vehicle][current_edge] += delta_t #update time in current edge
+
             # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             # traci.vehicle.getLastActionTime(vehicle)
             if vehicle not in current_vehicles:
@@ -112,11 +137,11 @@ def run():
 
             current_vehicles[vehicle].calc_path(paths)
 
-            current_edge = traci.vehicle.getRoadID(vehicle)
+            
 
             connected_edges = traci.edge.getIDList()
 
-            print(connected_edges)
+           # print(connected_edges)
 
             
 
@@ -140,7 +165,27 @@ def run():
 
 
     traci.close()
+
+    print(vehicle_times)
+
     sys.stdout.flush()
+
+
+def updateVehicles(vehicles):
+
+    for vehicle in vehicles:
+        
+        if vehicle not in vehicle_edge:
+
+            print(traci.vehicle.getRoadID(vehicle))
+            vehicle_times[vehicle] = {}
+            vehicle_edge[vehicle] = traci.vehicle.getRoadID(vehicle)
+            vehicle_times[vehicle][traci.vehicle.getRoadID(vehicle)] = 0
+
+
+    
+       
+        
 
 
 if __name__ == "__main__":
