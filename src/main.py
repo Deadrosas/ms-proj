@@ -190,6 +190,12 @@ def updateVehicles(vehicles):
 
 if __name__ == "__main__":
     """main entry point"""
+    
+    if len(sys.argv) == 1:
+        print("Format: main.py [simul_path]")
+        print("simul_path is the path relative to the /SUMO_SIMULATIONS/ directory")
+        exit(1)
+    
     options = get_options()
 
 
@@ -198,7 +204,13 @@ if __name__ == "__main__":
     else:
         sumoBinary = checkBinary('sumo-gui')
 
-    parse_network()
+    
+
+    simul = sys.argv[1]
+
+    pathSimul = "../SUMO_Simulations/" + simul + ".sumocfg"
+
+    parse_network("../SUMO_Simulations/" + simul + ".net.xml")
 
     traci.start([sumoBinary, "-c", "../SUMO_Simulations/Basic/basic.sumocfg", "--tripinfo-output", "tripinfo.xml"])
 
