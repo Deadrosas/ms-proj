@@ -212,6 +212,6 @@ if __name__ == "__main__":
 
     parse_network("../SUMO_Simulations/" + simul + ".net.xml")
 
-    traci.start([sumoBinary, "-c", "../SUMO_Simulations/Basic/basic.sumocfg", "--tripinfo-output", "tripinfo.xml"])
+    traci.start([sumoBinary, "-c", pathSimul, "--tripinfo-output", "tripinfo.xml"])
 
     run()
