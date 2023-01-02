@@ -1,0 +1,8 @@
+<agents>
+
+    <agent id="agent1" type="car" start="E2" finish="E16" color="1,0,0">
+        
+
+    <agent id="agent2" type="car" start="E3" finish="E17" color="1,1,0"/>
+
+</agents>

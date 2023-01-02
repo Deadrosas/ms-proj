@@ -10,6 +10,7 @@ from simple_driver_agent.simple_driver_agent import *
 from simple_driver_agent.simple_driver_agent_components import *
 
 from edge import *
+from agent import *
 
 vehicles = {}
 
@@ -18,6 +19,8 @@ vehicle_times = {}
 vehicle_edge = {}
 
 edges = {}
+
+agents = {}
 
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
@@ -75,13 +78,22 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
         edges[edge].add_previous(list(map(lambda x: x[0], filter(lambda x: x[1] == edge, connection_list))))
         edges[edge].add_next(list(map(lambda x: x[1], filter(lambda x: x[0] == edge, connection_list))))
 
-    # print(connection_list)
-    # print(edge_list)
+    #print(connection_list)
+    #print(edge_list)
     
     #print (edges)
-    # print(edges)
-    # print(connections)
+   # print(edges)
+   # print(connections)
 
+def parse_agents(path):
+    tree = ET.parse(path)
+    root = tree.getroot()
+
+    agents_xml = root.findall("agent")
+
+    for agent in agents_xml:
+        agents[agent.attrib["id"]] = Agent(agent.attrib["id"],agent.attrib["start"],agent.attrib["goal"],agent.attrib["color"],agent.attrib["type"])
+        
 
 
 
@@ -91,7 +103,7 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
 
 env = agentspeak.runtime.Environment()
 
-current_vehicles = {}
+current_agents = {}
 
 #TODO: Get paths from routes.xml
 paths = ((("E1", 3), ("E2", 40), ("E3", 5))
@@ -101,63 +113,19 @@ def run():
     """execute the TraCI control loop"""
     step = 0
     
+    startAgents()
 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        
-
-        
-
-        # vehicles = traci.edge.getLastStepVehicleIDs("E0")
+    
 
         vehicles = traci.vehicle.getIDList()
-        
 
-        delta_t = traci.simulation.getDeltaT()
+        print(vehicles)
+        
+        
         updateVehicles(vehicles)
-        for vehicle in vehicles:
-            
-            current_edge = traci.vehicle.getRoadID(vehicle)
-        
-            #check if vehicle edge changed
-            if vehicle_edge[vehicle] != current_edge: 
-                ##Check if it's an edge
-                if current_edge[0] == 'E':
-                    vehicle_edge[vehicle] = current_edge #update current edge
-                    vehicle_times[vehicle][current_edge] = 0 #elapsed time for new edge
-
-            else:
-                vehicle_times[vehicle][current_edge] += delta_t #update time in current edge
-
-            # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
-            # traci.vehicle.getLastActionTime(vehicle)
-            if vehicle not in current_vehicles:
-                current_vehicles[vehicle] = SimpleDriverAgent(vehicle, paths)
-                print("Vehicle {} is on the edge {}".format(vehicle, traci.vehicle.getRoadID(vehicle)))
-
-            current_vehicles[vehicle].calc_path(paths)
-
-            
-
-            connected_edges = traci.edge.getIDList()
-
-           # print(connected_edges)
-
-            
-
-        # traci.vehicle.getLastActionTime()
-
-        # if step % 100 == 0:
-        #     print(step)
-
-        if step % 100 == 0 and step != 0:
-            print(current_vehicles)
-        #     for vehicle in current_vehicles:
-        #         print(current_vehicles[vehicle])
-        #         current_vehicles[vehicle].calc_path(paths)
-            
-        # #     traci.vehicle.changeTarget("carflow.0", "E4")
-        # #     traci.vehicle.changeTarget("carflow.2", "E4")
+        updateTimes(vehicles)
 
 
         step += 1
@@ -166,25 +134,66 @@ def run():
 
     traci.close()
 
+   
+    print(vehicle_edge)
     print(vehicle_times)
 
     sys.stdout.flush()
 
 
+def startAgents():
+    for agent in agents:
+        current_agents[agent.id] = SimpleDriverAgent(agent.id, paths)
+        current_vehicles[vehicle].calc_path(paths)
+        
+       
+
+
 def updateVehicles(vehicles):
 
     for vehicle in vehicles:
-        
-        if vehicle not in vehicle_edge:
 
-            print(traci.vehicle.getRoadID(vehicle))
-            vehicle_times[vehicle] = {}
-            vehicle_edge[vehicle] = traci.vehicle.getRoadID(vehicle)
-            vehicle_times[vehicle][traci.vehicle.getRoadID(vehicle)] = 0
+        if vehicle.startswith("agent") and vehicle.split(".")[0] not in vehicle_edge:
+            
+            print("New Agent {} is on the edge {}".format(vehicle, traci.vehicle.getRoadID(vehicle)))
+
+            vehicle_id = vehicle.split(".")[0]
+            
+            vehicle_times[vehicle_id] = {}
+            vehicle_edge[vehicle_id] = traci.vehicle.getRoadID(vehicle)
+            vehicle_times[vehicle_id][traci.vehicle.getRoadID(vehicle)] = 0
 
 
-    
-       
+def updateTimes(vehicles):
+
+    delta_t = traci.simulation.getDeltaT()
+    for vehicle in (vehicle for vehicle in vehicles if vehicle.startswith("agent")):
+            
+            vehicle_id = vehicle.split(".")[0]
+            
+            current_edge = traci.vehicle.getRoadID(vehicle)
+
+            #check if vehicle edge changed
+            if vehicle_edge[vehicle_id] != current_edge: 
+                ##Check if it's an edge
+                if current_edge[0] == 'E':
+                    vehicle_edge[vehicle_id] = current_edge #update current edge
+                    vehicle_times[vehicle_id][current_edge] = 0 #elapsed time for new edge
+                    print("Agent " + vehicle_id + "on a new edge " + current_edge)
+
+            else:
+                vehicle_times[vehicle_id][current_edge] += delta_t #update time in current edge
+                print("Updating time for vehicle " + vehicle_id + "on edge " + current_edge + " with time " + str(vehicle_times[vehicle_id][current_edge]) )
+ 
+            # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
+            # traci.vehicle.getLastActionTime(vehicle)
+           # if vehicle_id not in current_agents:
+               # current_agents[vehicle_id] = SimpleDriverAgent(vehicle, paths)
+                
+               # print("Initialized Agent {} is on the edge {}".format(vehicle, traci.vehicle.getRoadID(vehicle)))
+
+           # current_vehicles[vehicle].calc_path(paths)
+
         
 
 
@@ -211,6 +220,8 @@ if __name__ == "__main__":
     pathSimul = "../SUMO_Simulations/" + simul + ".sumocfg"
 
     parse_network("../SUMO_Simulations/" + simul + ".net.xml")
+
+    parse_agents("../SUMO_Simulations/" + simul+ ".agents.xml")
 
     traci.start([sumoBinary, "-c", pathSimul, "--tripinfo-output", "tripinfo.xml"])
 
