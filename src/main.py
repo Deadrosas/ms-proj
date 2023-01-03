@@ -124,7 +124,7 @@ def run():
 
 
             if current_edge == "E0":
-                current_vehicles[vehicle].calc_path()
+                print(current_vehicles[vehicle].calc_path())
 
             
 

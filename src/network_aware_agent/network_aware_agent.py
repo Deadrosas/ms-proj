@@ -51,6 +51,7 @@ class NetworkAwareDriverAgent():
 
     def calc_path(self):
         
+        self.path = []
     
         paths = find_paths(self.edges_dictionary, self.start, self.destination)
 
@@ -68,9 +69,8 @@ class NetworkAwareDriverAgent():
         It then does what the agent needs it to do. In this case it does everything ( calculates the shortest path )."""
         @calc_path_action.add_function(".calc_shortest_path", (tuple, ))
         def calc_shortest_path(paths):
-
             path = min(paths, key=calc_simple_path_cost)
-
+            self.path = path
             return path
 
         # -----------------------------------------------------------------------
@@ -93,7 +93,7 @@ class NetworkAwareDriverAgent():
 
         # ----------------------------- RUN AGENT -----------------------------
         env.run_agent(agent)
-        return
+        return list(map(lambda x: x[0], self.path))
 
 
     def __repr__(self) -> str:
