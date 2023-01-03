@@ -5,7 +5,8 @@ import xml.etree.ElementTree as ET
 
 import time
 
-from simple_driver_agent.simple_driver_agent import *
+from network_aware_agent.network_aware_agent import *
+from reactive_driver_agent.reactive_agent import *
 
 from edge import *
 
@@ -22,7 +23,6 @@ if 'SUMO_HOME' in os.environ:
     sys.path.append(tools)
 else:
     sys.exit("SUMO_HOME is not set!!!")
-
 
 
 
@@ -73,13 +73,6 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
         edges[edge].set_previous(list(map(lambda x: x[0], filter(lambda x: x[1] == edge, connection_list))))
         edges[edge].set_next(list(map(lambda x: x[1], filter(lambda x: x[0] == edge, connection_list))))
 
-    # print(connection_list)
-    # print(edge_list)
-    
-    #print (edges)
-    print(edges)
-    # print(connections)
-
 
 
 """Deal with AgentSpeak code here"""
@@ -89,10 +82,6 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
 env = agentspeak.runtime.Environment()
 
 current_vehicles = {}
-
-#TODO: Get paths from routes.xml
-paths = ((("E1", 3), ("E2", 40), ("E3", 5))
-        ,(("E14", 3), ("E13", 4), ("E12", 5), ("E11", 2), ("E10", 2), ("E9", 1), ("E8", 2), ("E7", 5), ("E6", 2), ("E5", 1), ("E4", 1)))
 
 def run():
     """execute the TraCI control loop"""
@@ -129,7 +118,7 @@ def run():
             # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             # traci.vehicle.getLastActionTime(vehicle)
             if vehicle not in current_vehicles:
-                current_vehicles[vehicle] = SimpleDriverAgent(vehicle, destination = "E15")
+                current_vehicles[vehicle] = NetworkAwareDriverAgent(vehicle, destination = "E15")
                 print("Vehicle {} is on the edge {}".format(vehicle, traci.vehicle.getRoadID(vehicle)))
 
 
