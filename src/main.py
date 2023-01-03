@@ -5,9 +5,8 @@ import xml.etree.ElementTree as ET
 
 import time
 
-from simple_driver_agent.simple_driver_agent import *
-
-from simple_driver_agent.simple_driver_agent_components import *
+from network_aware_agent.network_aware_agent import *
+from reactive_driver_agent.reactive_agent import *
 
 from edge import *
 
@@ -24,7 +23,6 @@ if 'SUMO_HOME' in os.environ:
     sys.path.append(tools)
 else:
     sys.exit("SUMO_HOME is not set!!!")
-
 
 
 
@@ -72,16 +70,8 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
 
     for edge in edges:
         
-        edges[edge].add_previous(list(map(lambda x: x[0], filter(lambda x: x[1] == edge, connection_list))))
-        edges[edge].add_next(list(map(lambda x: x[1], filter(lambda x: x[0] == edge, connection_list))))
-
-    # print(connection_list)
-    # print(edge_list)
-    
-    #print (edges)
-    # print(edges)
-    # print(connections)
-
+        edges[edge].set_previous(list(map(lambda x: x[0], filter(lambda x: x[1] == edge, connection_list))))
+        edges[edge].set_next(list(map(lambda x: x[1], filter(lambda x: x[0] == edge, connection_list))))
 
 
 
@@ -92,10 +82,6 @@ def parse_network(path = "../SUMO_Simulations/Basic/basic.net.xml"):
 env = agentspeak.runtime.Environment()
 
 current_vehicles = {}
-
-#TODO: Get paths from routes.xml
-paths = ((("E1", 3), ("E2", 40), ("E3", 5))
-        ,(("E14", 3), ("E13", 4), ("E12", 5), ("E11", 2), ("E10", 2), ("E9", 1), ("E8", 2), ("E7", 5), ("E6", 2), ("E5", 1), ("E4", 1)))
 
 def run():
     """execute the TraCI control loop"""
@@ -132,10 +118,13 @@ def run():
             # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             # traci.vehicle.getLastActionTime(vehicle)
             if vehicle not in current_vehicles:
-                current_vehicles[vehicle] = SimpleDriverAgent(vehicle, paths)
+                current_vehicles[vehicle] = NetworkAwareDriverAgent(vehicle, edges, destination = "E15")
                 print("Vehicle {} is on the edge {}".format(vehicle, traci.vehicle.getRoadID(vehicle)))
 
-            current_vehicles[vehicle].calc_path(paths)
+
+
+            if current_edge == "E0":
+                current_vehicles[vehicle].calc_path()
 
             
 
@@ -150,14 +139,14 @@ def run():
         # if step % 100 == 0:
         #     print(step)
 
-        if step % 100 == 0 and step != 0:
-            print(current_vehicles)
-        #     for vehicle in current_vehicles:
-        #         print(current_vehicles[vehicle])
-        #         current_vehicles[vehicle].calc_path(paths)
+        # if step % 100 == 0 and step != 0:
+        #     print(current_vehicles)
+        # #     for vehicle in current_vehicles:
+        # #         print(current_vehicles[vehicle])
+        # #         current_vehicles[vehicle].calc_path(paths)
             
-        # #     traci.vehicle.changeTarget("carflow.0", "E4")
-        # #     traci.vehicle.changeTarget("carflow.2", "E4")
+        # # #     traci.vehicle.changeTarget("carflow.0", "E4")
+        # # #     traci.vehicle.changeTarget("carflow.2", "E4")
 
 
         step += 1
@@ -177,21 +166,16 @@ def updateVehicles(vehicles):
         
         if vehicle not in vehicle_edge:
 
-            print(traci.vehicle.getRoadID(vehicle))
+            # print(traci.vehicle.getRoadID(vehicle))
             vehicle_times[vehicle] = {}
             vehicle_edge[vehicle] = traci.vehicle.getRoadID(vehicle)
             vehicle_times[vehicle][traci.vehicle.getRoadID(vehicle)] = 0
 
 
     
-       
-        
-
-
 if __name__ == "__main__":
     """main entry point"""
     options = get_options()
-
 
     if options.nogui:
         sumoBinary = checkBinary('sumo')
