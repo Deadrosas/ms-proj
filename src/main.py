@@ -118,13 +118,13 @@ def run():
             # vehicles[vehicle] = sda.SimpleDriverAgent(env, vehicle, actions)
             # traci.vehicle.getLastActionTime(vehicle)
             if vehicle not in current_vehicles:
-                current_vehicles[vehicle] = NetworkAwareDriverAgent(vehicle, destination = "E15")
+                current_vehicles[vehicle] = NetworkAwareDriverAgent(vehicle, edges, destination = "E15")
                 print("Vehicle {} is on the edge {}".format(vehicle, traci.vehicle.getRoadID(vehicle)))
 
 
 
             if current_edge == "E0":
-                current_vehicles[vehicle].calc_path(edges)
+                current_vehicles[vehicle].calc_path()
 
             
 

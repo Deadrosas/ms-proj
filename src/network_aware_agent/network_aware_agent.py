@@ -13,7 +13,7 @@ def find_paths(edges, start, end, path=[]):
     if start == end:
         return [path]
 
-    # If the start node is not in the graph, return an empty list
+    # If the start node is not in the edge list, return an empty list
     if start not in edges:
         return []
     # Initialize an empty list to store the paths
@@ -35,7 +35,7 @@ def find_paths(edges, start, end, path=[]):
 class NetworkAwareDriverAgent():
     
 
-    def __init__(self, name, destination, start = "E0"):
+    def __init__(self, name, edges, destination, start = "E0"):
 
         self.name = name
 
@@ -45,12 +45,14 @@ class NetworkAwareDriverAgent():
         
         self.start = start
 
+        self.edges_dictionary = edges
 
 
-    def calc_path(self, edges_dictionary):
+
+    def calc_path(self):
         
     
-        paths = find_paths(edges_dictionary, self.start, self.destination)
+        paths = find_paths(self.edges_dictionary, self.start, self.destination)
 
         print(paths)
         
