@@ -52,10 +52,14 @@ class NetworkAwareDriverAgent():
     def calc_path(self):
         
         self.path = []
-    
+
+       
+
         paths = find_paths(self.edges_dictionary, self.start, self.destination)
 
-        print(paths)
+        
+
+        
         
         # ----------------------------- AGENTSPEAK -----------------------------
         calc_path_action = agentspeak.Actions(agentspeak.stdlib.actions) 

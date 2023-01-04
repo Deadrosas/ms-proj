@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <agents>
 
-    <agent id="agent1" type="car" start="E2" finish="E16" color="1,0,0" class="NetworkAwareDriverAgent">
-    <agent id="agent2" type="car" start="E3" finish="E17" color="1,1,0" class="NetworkAwareDriverAgent"/>
+    <agent id="agent1" type="car" start="E0" finish="E15" color="1,0,0" class="NetworkAwareDriverAgent"/>
+   <!-- <agent id="agent2" type="car" start="E0" finish="E15" color="1,1,0" class="NetworkAwareDriverAgent"/>-->
 
 </agents>

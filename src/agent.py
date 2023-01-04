@@ -10,10 +10,20 @@ class Agent:
         self.color = color
         self.type = type
 
+        self.edges = edges
+        
+
         match agent_class:
             case "NetworkAwareDriverAgent":
                 self.agent = NetworkAwareDriverAgent(self.id,edges,self.goal)
+    
+
             case "ReactiveDriverAgent":
                 self.agent = ReactiveDriverAgent(self.id,edges,self.goal)
             case _:
                 self.agent = NetworkAwareDriverAgent(self.id,edges,self.goal)
+
+    def setPath(self,path):
+        self.path = path
+    def getPath(self):
+        return self.path
